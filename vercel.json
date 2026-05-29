@@ -1,0 +1,5 @@
+{
+  "name": "portfolio-aap-vercel",
+  "buildCommand": "vite build",
+  "outputDirectory": "dist"
+}
