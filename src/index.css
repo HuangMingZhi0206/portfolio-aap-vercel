@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #fef7f7 0%, #fdeef0 50%, #fff5f0 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fdeef0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #f8b4c2, #f48aa3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #f48aa3, #ec6085);
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.glass-pink {
+  background: rgba(248, 180, 194, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(248, 180, 194, 0.3);
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #ec6085 0%, #f48aa3 50%, #d93d66 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated gradient background */
+.animated-gradient {
+  background: linear-gradient(-45deg, #fef7f7, #fdeef0, #fff5f0, #fbd5dc);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Canvas container */
+.canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Profile image glow */
+.profile-glow {
+  box-shadow: 
+    0 0 60px rgba(244, 138, 163, 0.4),
+    0 0 100px rgba(248, 180, 194, 0.3),
+    0 0 140px rgba(244, 138, 163, 0.2);
+}
+
+/* 3D perspective utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Profile 3D pop effect */
+.profile-3d {
+  transform-style: preserve-3d;
+  transform: translateZ(50px);
+}
+
+.profile-3d-shadow {
+  box-shadow: 
+    0 30px 60px -15px rgba(244, 138, 163, 0.5),
+    0 20px 40px -20px rgba(0, 0, 0, 0.2),
+    0 0 0 4px white,
+    0 0 0 8px rgba(248, 180, 194, 0.4);
+}
+
+/* Floating animation for 3D elements */
+@keyframes float3d {
+  0%, 100% {
+    transform: translateY(0px) translateZ(0px) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-15px) translateZ(20px) rotateX(5deg);
+  }
+}
+
+.animate-float3d {
+  animation: float3d 6s ease-in-out infinite;
+}
