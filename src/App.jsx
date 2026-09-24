@@ -1,37 +1,34 @@
-import { Suspense, lazy } from 'react'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import Stats from './components/Stats'
-import Experience from './components/Experience'
-import Skills from './components/Skills'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
+import { MotionConfig } from 'framer-motion'
+import Navbar from './components/layout/Navbar'
+import Footer from './components/layout/Footer'
+import Hero from './components/sections/Hero'
+import OrgMarquee from './components/sections/OrgMarquee'
+import Highlights from './components/sections/Highlights'
+import About from './components/sections/About'
+import Experience from './components/sections/Experience'
+import Skills from './components/sections/Skills'
+import Contact from './components/sections/Contact'
 
-// Loading component
-const LoadingSpinner = () => (
-  <div className="min-h-screen flex items-center justify-center bg-pink-50">
-    <div className="w-16 h-16 border-4 border-pink-200 border-t-pink-500 rounded-full animate-spin" />
-  </div>
-)
-
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen">
+    <MotionConfig reducedMotion="user">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-pink-700 focus:shadow-card"
+      >
+        Skip to content
+      </a>
       <Navbar />
-      <main>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Hero />
-        </Suspense>
+      <main id="main">
+        <Hero />
+        <OrgMarquee />
+        <Highlights />
         <About />
-        <Stats />
         <Experience />
         <Skills />
         <Contact />
       </main>
       <Footer />
-    </div>
+    </MotionConfig>
   )
 }
-
-export default App
