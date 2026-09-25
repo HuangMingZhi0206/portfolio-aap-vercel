@@ -57,7 +57,7 @@ src/
 
 ### Vercel
 
-The site deploys on Vercel with zero configuration (`vercel.json` only adds long-lived caching for hashed assets). Once the production domain is known, replace the relative `og:image` URL in `index.html` with the absolute one so link previews work everywhere.
+The site deploys on Vercel with zero configuration (`vercel.json` only adds long-lived caching for hashed assets). The `og:image` meta tags in `index.html` point to the production domain (`https://angel.syonin.site`) so link previews work everywhere.
 
 ### Coolify (or any Docker host)
 
