@@ -55,7 +55,21 @@ src/
 
 ## Deployment
 
+### Vercel
+
 The site deploys on Vercel with zero configuration (`vercel.json` only adds long-lived caching for hashed assets). Once the production domain is known, replace the relative `og:image` URL in `index.html` with the absolute one so link previews work everywhere.
+
+### Coolify (or any Docker host)
+
+A multi-stage `Dockerfile` builds the site and serves `dist/` with nginx (`nginx.conf` handles SPA fallback, gzip and cache headers).
+
+In Coolify: **New Resource → Public Repository**, paste the GitHub URL, set **Build Pack: Dockerfile**, **Port: 80**, add the domain (e.g. `https://angel.syonin.site`) and deploy. Point the domain's DNS A record at the Coolify server first so Let's Encrypt can issue the certificate.
+
+Local test:
+
+```bash
+docker build -t angel-portfolio . && docker run --rm -p 8080:80 angel-portfolio
+```
 
 ## Contact form
 
