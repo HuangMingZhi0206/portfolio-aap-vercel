@@ -1,0 +1,55 @@
+name: Deploy
+
+# Push to main is the release. The build used to run on the Coolify VM, which
+# has 1.5 CPU and also serves two other sites — so it competed with live
+# traffic. Here it costs nothing and the server only pulls the result.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: vars
+        run: echo "sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      # Two tags on purpose. `latest` is what docker-compose.yml follows, so
+      # deploys need no file edit. `sha-<short>` is the rollback handle.
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/huangmingzhi0206/portfolio-aap-vercel:latest
+            ghcr.io/huangmingzhi0206/portfolio-aap-vercel:sha-${{ steps.vars.outputs.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # POST, not GET: the endpoint answers 405 to GET. force=true matters too,
+      # or Coolify can reuse the `latest` image it already has and silently
+      # redeploy the previous build.
+      - name: Trigger Coolify
+        run: |
+          curl --fail-with-body -sS -X POST \
+            "https://coolify.syonin.site/api/v1/deploy?uuid=${{ secrets.COOLIFY_UUID }}&force=true" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"

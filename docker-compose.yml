@@ -1,0 +1,14 @@
+services:
+  web:
+    # Follows the moving tag: every push to main rebuilds it, so deploying
+    # needs no edit here. To roll back, put a specific build here instead —
+    # ghcr.io/huangmingzhi0206/portfolio-aap-vercel:sha-abc1234 — and redeploy.
+    image: ghcr.io/huangmingzhi0206/portfolio-aap-vercel:latest
+    restart: unless-stopped
+    environment:
+      # Coolify fills this in from the domain set on the resource.
+      - SERVICE_FQDN_WEB_80
+    expose:
+      - "80"
+    # No healthcheck block: the Dockerfile already declares one, and Compose
+    # would only be repeating it.
